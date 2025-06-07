@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 4011
 
 spring:
   rabbitmq:
@@ -9,4 +9,4 @@ spring:
     password: password
 
 core:
-  queue: core-processing-queue
+  queue: core-fila-de-candidatos
