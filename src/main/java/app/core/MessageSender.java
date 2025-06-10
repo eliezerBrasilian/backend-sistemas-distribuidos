@@ -4,6 +4,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Component
 public class MessageSender {
     final RabbitTemplate rabbitTemplate;
@@ -18,7 +20,12 @@ public class MessageSender {
 
     public void sendMessage(Message message) {
         try {
-            rabbitTemplate.convertAndSend(fila, message.toString());
+            String json = new ObjectMapper().writeValueAsString(message);
+
+            System.out.println("fila: " + fila);
+            System.out.println("json");
+            System.out.println(json);
+            rabbitTemplate.convertAndSend(fila, json);
             System.out.println("enviado");
         } catch (Exception e) {
             // failover

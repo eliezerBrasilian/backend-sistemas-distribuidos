@@ -1,11 +1,9 @@
 package app.core;
 
 public record Message(
-    String title
-) {
-    @Override
-    public String toString(){
-        return  "{title: \"" + title + "\"}";
-
-    }
+    String type,
+    String object,
+    String valor,
+    String datetime
+    ){  
 }
