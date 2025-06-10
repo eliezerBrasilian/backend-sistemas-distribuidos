@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import app.core.MessageController.Message;
+
 @Component
 public class MessageSender {
     final RabbitTemplate rabbitTemplate;
