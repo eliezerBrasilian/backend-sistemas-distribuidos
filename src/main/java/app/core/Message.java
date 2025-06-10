@@ -1,9 +1,8 @@
 package app.core;
 
 public record Message(
-    String type,
-    String object,
-    String valor,
-    String datetime
-    ){  
+        String type,
+        String object,
+        int valor,
+        String datetime) {
 }
