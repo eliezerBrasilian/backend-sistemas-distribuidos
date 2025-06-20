@@ -6,23 +6,24 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import app.core.MessageController.Message;
-
 @Component
 public class MessageSender {
     final RabbitTemplate rabbitTemplate;
     final String fila;
+    ObjectMapper objectMapper;
 
     public MessageSender(
             RabbitTemplate rabbitTemplate,
-            @Value("${core.queue}") String fila) {
+            @Value("${core.queue}") String fila,
+            ObjectMapper objectMapper) {
         this.rabbitTemplate = rabbitTemplate;
         this.fila = fila;
+        this.objectMapper = objectMapper;
     }
 
-    public void sendMessage(Message message) {
+    public void sendMessage(MessageController.PayloadCore message) {
         try {
-            String json = new ObjectMapper().writeValueAsString(message);
+            String json = objectMapper.writeValueAsString(message);
 
             System.out.println("fila: " + fila);
             System.out.println("json");
