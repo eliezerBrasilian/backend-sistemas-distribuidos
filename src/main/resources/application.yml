@@ -2,13 +2,14 @@ server:
   port: 4011
 
 spring:
-  host: chimpanzee.rmq.cloudamqp.com
-  port: 5671
-  username: edxgujmk
-  password: Wm1vy2ea99LIfZh-ZZyl3DhWlLDlNcdH
-  virtual-host: edxgujmk
-  ssl:
-    enabled: true
+  rabbitmq:
+    host: chimpanzee.rmq.cloudamqp.com
+    port: 5671
+    username: edxgujmk
+    password: Wm1vy2ea99LIfZh-ZZyl3DhWlLDlNcdH
+    virtual-host: edxgujmk
+    ssl:
+      enabled: true
 
 core:
   queue: lotes_de_dados
