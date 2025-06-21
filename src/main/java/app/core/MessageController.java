@@ -18,38 +18,48 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MessageController {
 
-    final MessageSender sender;
+        final MessageSender sender;
 
-    public MessageController(MessageSender sender) {
-        this.sender = sender;
-    }
+        public MessageController(MessageSender sender) {
+                this.sender = sender;
+        }
 
-    public record PayloadCore(
-            String batchId,
-            String sourceNodeId,
-            List<Message> dataPoints) {
-    }
+        public record PayloadCore(
+                        String batchId,
+                        String sourceNodeId,
+                        List<Message> dataPoints) {
+        }
 
-    // melhor-filme-2025
-    public record Message(
-            String type,
-            String objectIdentifier,
-            int valor,
-            LocalDateTime datetime) {
-    }
+        public record Body(
+                        String objectIdentifier) {
+        }
 
-    @PostMapping("/candidato/{id}")
-    public ResponseEntity<String> votar(
-            @PathVariable("id") String idCandidato,
-            @RequestBody Message body) {
-        System.out.println("votou em: " + idCandidato);
+        // melhor-filme-2025
+        public record Message(
+                        String type,
+                        String objectIdentifier,
+                        int valor,
+                        LocalDateTime datetime) {
+        }
 
-        var payloadCore = new PayloadCore(
-                UUID.randomUUID().toString(),
-                "node-coletor-fantasma",
-                List.of(body));
+        @PostMapping("/candidato/{id}")
+        public ResponseEntity<String> votar(
+                        @PathVariable("id") String idCandidato,
+                        @RequestBody Body body) {
+                System.out.println("votou em: " + idCandidato);
 
-        sender.sendMessage(payloadCore);
-        return ResponseEntity.ok("Mensagem enviada com sucesso");
-    }
+                var message = new Message(
+                                "melhor-filme-2025",
+                                body.objectIdentifier(),
+                                1,
+                                LocalDateTime.now());
+
+                var payloadCore = new PayloadCore(
+                                UUID.randomUUID().toString(),
+                                "node-coletor-fantasma",
+                                List.of(message));
+
+                sender.sendMessage(payloadCore);
+                return ResponseEntity.ok("Mensagem enviada com sucesso");
+        }
 }
